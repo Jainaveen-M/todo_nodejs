@@ -3,25 +3,32 @@ const { result } = require("lodash");
 
 const app = express();
 const mongoose = require('mongoose');
-const item = require("./model/items");
-//mongodb 
+const Item = require("./model/items");
 
-const dbURI = '';
+//mongodb 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.raw());
+const dbURI = 'mongodb+srv://admin:admin123@cluster0.wgqh2.mongodb.net/todo?retryWrites=true&w=majority';
 mongoose.connect(dbURI)
 .then((result)=>{
     console.log("connted to db..");
-    app.listen(5000);
+    // listing to port 
+    app.listen(5566);
 })
 .catch(()=>{console.log("error")});
 
-//storing data from mongodb
+//storing data to mongodb
 
-app.get('/db',(req,res)=>{
-    const itemModel = new item({
-        title:'dev',
-        desc:'nodejs development',
-    });
-    itemModel.save().then((result)=>{
+app.post('/db',(req,res)=>{
+  //  const item = new Item(req.body);
+  console.log(req);
+  const item = new Item({
+    title:req.body.title,
+    desc:req.body.desc,
+});
+    console.log(req.body);
+    item.save().then((result)=>{
         res.send(result);
     }).catch((error)=>{
         console.log(error);
@@ -32,7 +39,7 @@ app.get('/db',(req,res)=>{
 //storing data from mongodb
 
 app.get('/get-db',(req,res)=>{
-    item.find()
+    Item.find()
     .then((result)=>{
         res.send(result);
     }).catch((err)=>{
@@ -40,10 +47,62 @@ app.get('/get-db',(req,res)=>{
     })
 });
 
-//getting single doc from db
 
+// query from mongo db
+app.get('/getTodos/:number',(req,res)=>{
+    console.log(req.params.number);
+    Item.find().limit(Number(req.params.number))
+    .then((result)=>{
+        res.send(result);
+    })
+    .catch((err)=>{
+        console.log(err)
+    });
+});
+
+//update mongo db using id
+app.put('/update/:id',(req,res)=>{
+    console.log(req.params.id);
+    const item = new Item({
+        title:req.body.title,
+        desc:req.body.desc,
+    });
+    const id = req.params.id;
+    Item.findByIdAndUpdate(id)
+    .then((result)=>{
+        if(!result){
+            res.status(404).send({
+                message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+              });
+        }
+        else{
+            res.send(item);
+        }
+       
+    })
+    .catch((err)=>{
+        res.status(500).send({
+            message: "Could not delete Tutorial with id=" + id
+          });
+    });
+});
+
+//delete using id
+app.delete("/delete/:id",(req,res)=>{
+    console.log(req.params.id);
+    const id = req.params.id;
+    Item.findByIdAndRemove(id)
+    .then((result)=>{
+        res.send(result);
+    })
+    .catch((err)=>{
+        console.log(err);
+    });
+});
+
+//getting single doc from db
 app.get('/single-doc',(req,res)=>{
-    item.findById("61b5f2ab7d6c166269e24150")
+    Item.findById("61b5f2ab7d6c166269e24150")
     .then((result)=>{
         res.send(result);
     })

@@ -6,6 +6,9 @@ console.log("welcome to javascript!.")
 //     console.log("Joke :"+data.value);
 // }).catch();
 
+function onBtnPressed(){
+    console.log(document.getElementById('title').innerText);
+}
 
 var shop_open = true;
 
