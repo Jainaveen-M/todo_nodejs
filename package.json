@@ -5,8 +5,13 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run build",
     "start": "node app.js"
   },
+  "engines": {
+    "node": ">=14.0.O",  
+    "npm": ">=7.7.0"
+ },
   "keywords": [],
   "author": "",
   "license": "ISC",
