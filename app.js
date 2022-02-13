@@ -110,7 +110,8 @@ app.get('/single-doc',(req,res)=>{
 });
 
 app.get("/",(req,res)=>{
-    res.sendFile("./views/home.html",{root:__dirname});
+    res.send("welcome to herko app");
+   // res.sendFile("./views/home.html",{root:__dirname});
 });
 app.get("/about",(req,res)=>{
     res.sendFile("./views/about.html",{root:__dirname});
