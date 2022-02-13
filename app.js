@@ -36,6 +36,7 @@ app.post('/db',(req,res)=>{
 });
 
 
+
 //storing data from mongodb
 
 
