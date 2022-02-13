@@ -35,11 +35,7 @@ app.post('/db',(req,res)=>{
     });
 });
 
-
-
 //storing data from mongodb
-
-
 app.get('/get-db',(req,res)=>{
     Item.find()
     .then((result)=>{
