@@ -16,9 +16,9 @@ mongoose.connect(dbURI)
     console.log("connted to db..");
     // listing to port 
    // app.listen(5566);
-    app.listen(port,()=>{
-        console.log("listening to port "+port);
-    });
+    // app.listen(port,()=>{
+    //     console.log("listening to port "+port);
+    // });
 })
 .catch(()=>{console.log("error")});
 
