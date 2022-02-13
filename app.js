@@ -5,6 +5,7 @@ const app = express();
 const mongoose = require('mongoose');
 const Item = require("./model/items");
 
+const port = Process.env.PORT || 3000 ;
 //mongodb 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -14,7 +15,10 @@ mongoose.connect(dbURI)
 .then((result)=>{
     console.log("connted to db..");
     // listing to port 
-    app.listen(5566);
+   // app.listen(5566);
+    app.listen(port,()=>{
+        console.log("listening to port "+port);
+    });
 })
 .catch(()=>{console.log("error")});
 
