@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const Item = require("./model/items");
 
 const port = process.env.PORT || 3000 ;
+//const port = process.env.port || 3000;
 //mongodb 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
